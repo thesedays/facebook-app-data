@@ -1,0 +1,6 @@
+This demo shows how to use the Facebook server-side flow (OAuth 2.0) for authentication on Facebook Page Tabs.
+
+This is important, because if you use the client-side flow (JavaScript SDK), the cookie is set from your application's iframe and therefore isn't available on your server-side in the Safari browser.
+
+http://www.facebook.com/apps/application.php?id=128534967229326&sk=app_128534967229326
+
