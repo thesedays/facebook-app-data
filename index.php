@@ -5,18 +5,19 @@ include_once 'client/facebook.php';
 
 class MyPageTab {
 
+	private $facebook;
 	private $tabUrl;
 
 	public function __construct() {
 
 		// Initialise Facebook SDK
-		$facebook = new Facebook(array(
+		$this->facebook = new Facebook(array(
 			'appId'  => APP_ID,
 			'secret' => APP_SECRET,
 		));
 
 		// Get the Facebook signed_request object
-		$signedRequest = $facebook->getSignedRequest();
+		$signedRequest = $this->facebook->getSignedRequest();
 
 		// Get the app_data string parameter and decode it into an array
 		$appData = array();
@@ -39,8 +40,10 @@ class MyPageTab {
 			echo '<h1>Blue page</h1>';
 		}
 
+		echo '<p>Is the session accessible by JavaScript? - <span id="login-status">checking...</span></p>';
+
 		// Echo a navigation menu
-		$this->tabUrl = 'http://www.facebook.com/apps/application.php?id=142464959162218&sk=app_142464959162218';
+		$this->tabUrl = 'http://www.facebook.com/apps/application.php?id=128534967229326&sk=app_128534967229326';
 		echo '<nav>';
 		$this->echoNavItem(array(
 			'colour'        => 'red',
@@ -66,8 +69,10 @@ class MyPageTab {
 
 	private function echoNavItem($params) {
 		$encodedParams = urlencode(json_encode($params)); // Encode the parameters to a JSON string for use in a URL query string
-		$url = $this->tabUrl . '&app_data=' . $encodedParams;
-		echo '<a href="' . $url . '" target="_top">' . $params['colour'] . '</a> ';
+		$url = $this->facebook->getLoginUrl(array(
+			'redirect_uri' => 'http://playground.thesedays.com/facebook-serverside-login/facebook-callback.php?app_data=' . $encodedParams
+		));
+		echo '<a href="' . $url . '" target="_top">Login and then visit ' . $params['colour'] . '</a><br/> ';
 	}
 
 	private function echoPageTop($colour) {
@@ -78,7 +83,20 @@ class MyPageTab {
 					'<title>Demo of app_data parameter</title>' .
 					'<style>body { font-family: sans-serif; color: #FFF; } a { color: #FFF; }</style>' .
 				'</head>' .
-				'<body style="background: '.$colour.'">';
+				'<body style="background: '.$colour.'">' .
+					'<div id="fb-root"></div>' .
+					'<script src="//connect.facebook.net/en_US/all.js"></script>' .
+					'<script>' .
+						'FB.init({ appId: "'.APP_ID.'", status: true, cookie: true, xfbml: false });' .
+						'FB.getLoginStatus(function(response) {' .
+							'var status = document.getElementById("login-status");' .
+							'if (response.session) {' .
+								'status.innerHTML = "Logged in";' .
+							'} else {' .
+								'status.innerHTML = "Not logged in";' .
+							'}' .
+						'});' .
+					'</script>';
 	}
 
 	private function echoPageBottom() {
