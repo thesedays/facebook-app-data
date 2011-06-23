@@ -40,6 +40,8 @@ class MyPageTab {
 			echo '<h1>Blue page</h1>';
 		}
 
+		$userId = $this->facebook->getUser();
+		echo '<p>Is the session accessible by the server? - ' . (empty($userId) ? 'No' : 'Yes, user ID = ' . $userId) . '</p>';
 		echo '<p>Is the session accessible by JavaScript? - <span id="login-status">checking...</span></p>';
 
 		// Echo a navigation menu
