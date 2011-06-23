@@ -45,7 +45,7 @@ class MyPageTab {
 		echo '<p>Is the session accessible by JavaScript? - <span id="login-status">checking...</span></p>';
 
 		// Echo a navigation menu
-		$this->tabUrl = 'http://www.facebook.com/apps/application.php?id=128534967229326&sk=app_128534967229326';
+		$this->tabUrl = 'https://www.facebook.com/apps/application.php?id=128534967229326&sk=app_128534967229326';
 		echo '<nav>';
 		$this->echoNavItem(array(
 			'colour'        => 'red',
@@ -72,7 +72,7 @@ class MyPageTab {
 	private function echoNavItem($params) {
 		$encodedParams = urlencode(json_encode($params)); // Encode the parameters to a JSON string for use in a URL query string
 		$url = $this->facebook->getLoginUrl(array(
-			'redirect_uri' => 'http://playground.thesedays.com/facebook-serverside-login/facebook-callback.php?app_data=' . $encodedParams
+			'redirect_uri' => 'https://playground.thesedays.com/facebook-serverside-login/facebook-callback.php?app_data=' . $encodedParams
 		));
 		echo '<a href="' . $url . '" target="_top">Login and then visit ' . $params['colour'] . '</a><br/> ';
 	}

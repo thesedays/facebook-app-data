@@ -9,7 +9,7 @@ class FacebookLogin {
 
 	public function __construct() {
 
-		$this->tabUrl = 'http://www.facebook.com/apps/application.php?id=128534967229326&sk=app_128534967229326';
+		$this->tabUrl = 'https://www.facebook.com/apps/application.php?id=128534967229326&sk=app_128534967229326';
 
 		// Initialise Facebook SDK
 		$facebook = new Facebook(array(
