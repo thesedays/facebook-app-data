@@ -1,6 +1,7 @@
 <?php
 
 include_once 'config.php'; // Defines APP_ID and APP_SECRET
+include_once 'client/facebook.php';
 
 class FacebookLogin {
 
